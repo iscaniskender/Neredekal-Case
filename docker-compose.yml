@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  hoteldb:
+    image: postgres:latest
+    container_name: hoteldb
+    environment:
+      - POSTGRES_USER=hotel_user
+      - POSTGRES_PASSWORD=hotel_password
+      - POSTGRES_DB=hoteldb
+    ports:
+      - "5432:5432"
+    volumes:
+      - hoteldb_data:/var/lib/postgresql/data
+    networks:
+      - postgres_network
+
+  reportdb:
+    image: postgres:latest
+    container_name: reportdb
+    environment:
+      - POSTGRES_USER=report_user
+      - POSTGRES_PASSWORD=report_password
+      - POSTGRES_DB=reportdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - reportdb_data:/var/lib/postgresql/data
+    networks:
+      - postgres_network
+
+volumes:
+  hoteldb_data:
+  reportdb_data:
+
+networks:
+  postgres_network:
+    driver: bridge
