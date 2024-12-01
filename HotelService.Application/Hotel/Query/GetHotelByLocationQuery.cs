@@ -1,5 +1,5 @@
 ﻿using App.Core.Results;
-using HotelService.Application.Hotel.Dto;
+using HotelService.Application.Dto;
 using MediatR;
 
 namespace HotelService.Application.Hotel.Query;

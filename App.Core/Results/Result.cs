@@ -1,4 +1,6 @@
-﻿namespace App.Core.Results;
+﻿using System.Text.Json.Serialization;
+
+namespace App.Core.Results;
 
 public class Result<T>
 {
@@ -6,6 +8,7 @@ public class Result<T>
     public string Message { get; private set; }
     public T Data { get; private set; }
 
+    [JsonConstructor]
     private Result(bool isSuccessful, string message, T data)
     {
         IsSuccessful = isSuccessful;

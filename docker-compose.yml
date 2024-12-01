@@ -1,6 +1,41 @@
 version: '3.8'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" 
+      - "15672:15672" 
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+  hotelservice-api:
+    build:
+      context: .
+      dockerfile: HotelService.Api/Dockerfile
+    ports:
+      - "5076:8080"
+    networks:
+      - app_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__HotelDatabase=Host=hoteldb;Port=5432;Database=hoteldb;Username=hotel_user;Password=hotel_password
+    depends_on:
+      - hoteldb
+  report-api:
+    build:
+      context: .
+      dockerfile: ReportService.Api/Dockerfile
+    ports:
+      - "5078:8080"
+    networks:
+      - app_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__ReportDatabase=Host=reportdb;Port=5433;Database=reportdb;Username=report_user;Password=report_password
+    depends_on:
+      - reportdb
   hoteldb:
     image: postgres:latest
     container_name: hoteldb
@@ -10,10 +45,8 @@ services:
       - POSTGRES_DB=hoteldb
     ports:
       - "5432:5432"
-    volumes:
-      - hoteldb_data:/var/lib/postgresql/data
     networks:
-      - postgres_network
+      - app_network
 
   reportdb:
     image: postgres:latest
@@ -24,15 +57,9 @@ services:
       - POSTGRES_DB=reportdb
     ports:
       - "5433:5432"
-    volumes:
-      - reportdb_data:/var/lib/postgresql/data
     networks:
-      - postgres_network
-
-volumes:
-  hoteldb_data:
-  reportdb_data:
+      - app_network
 
 networks:
-  postgres_network:
+  app_network:
     driver: bridge

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using App.Core.Results;
 using AutoMapper;
-using HotelService.Application.Hotel.Dto;
 using HotelService.Data.Entity;
 using HotelService.Data.Repository.Hotel;
 

@@ -1,6 +1,6 @@
 ﻿using App.Core.Results;
 using AutoMapper;
-using HotelService.Application.Hotel.Dto;
+using HotelService.Application.Dto;
 using HotelService.Data.Repository;
 using HotelService.Data.Repository.ContactInfo;
 using MediatR;

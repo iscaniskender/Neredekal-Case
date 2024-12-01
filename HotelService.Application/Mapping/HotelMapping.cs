@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using HotelService.Application.AuthorizedPerson.Command;
 using HotelService.Application.ContactInfo.Command;
+using HotelService.Application.Dto;
 using HotelService.Application.Hotel.Command;
-using HotelService.Application.Hotel.Dto;
 using HotelService.Data.Entity;
 using HotelService.Data.Enum;
 

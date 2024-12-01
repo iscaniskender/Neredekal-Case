@@ -8,14 +8,8 @@ namespace ReportService.Data.Repository
      
         Task<List<ReportEntity>> GetAllReportsAsync();
         Task<ReportEntity?> GetReportByIdAsync(Guid id);
-        Task AddReportAsync(ReportEntity report);
+        Task<Guid> AddReportAsync(ReportEntity report);
         Task DeleteReportAsync(Guid id);
         Task<List<ReportEntity>> GetReportsByStatusAsync(ReportStatus status);
-
-        Task<List<ReportDetailEntity>> GetAllDetailsAsync();
-        Task<ReportDetailEntity?> GetDetailByIdAsync(Guid id);
-        Task<List<ReportDetailEntity>> GetDetailsByReportIdAsync(Guid reportId);
-        Task AddDetailAsync(ReportDetailEntity detail);
-        Task DeleteDetailAsync(Guid id);
     }
 }

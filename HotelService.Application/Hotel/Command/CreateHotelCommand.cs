@@ -1,6 +1,6 @@
-﻿using HotelService.Application.Hotel.Dto;
-using MediatR;
+﻿using MediatR;
 using App.Core.Results;
+using HotelService.Application.Dto;
 
 namespace HotelService.Application.Hotel.Command
 {

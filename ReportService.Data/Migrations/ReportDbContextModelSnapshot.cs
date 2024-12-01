@@ -22,7 +22,7 @@ namespace ReportService.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ReportService.Data.Entity.ReportDetailEntity", b =>
+            modelBuilder.Entity("ReportService.Data.Entity.ReportEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,39 +39,10 @@ namespace ReportService.Data.Migrations
 
                     b.Property<string>("Location")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("text");
 
                     b.Property<int>("PhoneNumberCount")
                         .HasColumnType("integer");
-
-                    b.Property<Guid>("ReportId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReportId");
-
-                    b.ToTable("ReportDetails");
-                });
-
-            modelBuilder.Entity("ReportService.Data.Entity.ReportEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("RequestedAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -82,22 +53,6 @@ namespace ReportService.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Reports");
-                });
-
-            modelBuilder.Entity("ReportService.Data.Entity.ReportDetailEntity", b =>
-                {
-                    b.HasOne("ReportService.Data.Entity.ReportEntity", "Report")
-                        .WithMany("Details")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Report");
-                });
-
-            modelBuilder.Entity("ReportService.Data.Entity.ReportEntity", b =>
-                {
-                    b.Navigation("Details");
                 });
 #pragma warning restore 612, 618
         }

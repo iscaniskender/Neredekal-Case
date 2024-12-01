@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MassTransit" Version="8.3.2"/>
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\App.Core\App.Core.csproj"/>
+        <ProjectReference Include="..\ReportService.Client\ReportService.Client.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="Microsoft.AspNetCore">
+            <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.11\Microsoft.AspNetCore.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+</Project>

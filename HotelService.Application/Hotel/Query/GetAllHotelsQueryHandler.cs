@@ -1,8 +1,8 @@
-﻿using HotelService.Application.Hotel.Dto;
-using HotelService.Data.Repository.Hotel;
+﻿using HotelService.Data.Repository.Hotel;
 using MediatR;
 using App.Core.Results;
 using AutoMapper;
+using HotelService.Application.Dto;
 
 namespace HotelService.Application.Hotel.Query
 {

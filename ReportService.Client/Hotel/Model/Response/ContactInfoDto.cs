@@ -1,11 +1,4 @@
-﻿using HotelService.Data.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotelService.Application.Hotel.Dto
+﻿namespace ReportService.Client.Hotel.Model
 {
     public class ContactInfoDto
     {

@@ -1,5 +1,3 @@
-using App.Core.Results;
-using HotelService.Application.Hotel.Query;
 using HotelService.Application.Mapping;
 using HotelService.Application.MediatR;
 using HotelService.Data.Context;
@@ -7,7 +5,6 @@ using HotelService.Data.Repository;
 using HotelService.Data.Repository.AuthorizedPerson;
 using HotelService.Data.Repository.ContactInfo;
 using HotelService.Data.Repository.Hotel;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +25,12 @@ builder.Services.AddScoped<IContactInfoRepository, ContactInfoRepository>();
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+    dbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 
