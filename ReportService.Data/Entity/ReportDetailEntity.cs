@@ -1,5 +1,7 @@
 ﻿
 
+using App.Core.BaseClass;
+
 namespace ReportService.Data.Entity
 {
     public class ReportDetailEntity :BaseEntity

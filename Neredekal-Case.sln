@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.Api", "Report
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.Data", "ReportService.Data\ReportService.Data.csproj", "{0865B31C-3B8B-44E1-9706-4C309556EEEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Core", "App.Core\App.Core.csproj", "{88750467-D870-433A-81A5-61008F904892}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelService.Application", "HotelService.Application\HotelService.Application.csproj", "{796A24AF-844B-4463-BBE2-707EB1A44CA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{0865B31C-3B8B-44E1-9706-4C309556EEEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0865B31C-3B8B-44E1-9706-4C309556EEEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0865B31C-3B8B-44E1-9706-4C309556EEEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88750467-D870-433A-81A5-61008F904892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88750467-D870-433A-81A5-61008F904892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88750467-D870-433A-81A5-61008F904892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88750467-D870-433A-81A5-61008F904892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{796A24AF-844B-4463-BBE2-707EB1A44CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{796A24AF-844B-4463-BBE2-707EB1A44CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{796A24AF-844B-4463-BBE2-707EB1A44CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{796A24AF-844B-4463-BBE2-707EB1A44CA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

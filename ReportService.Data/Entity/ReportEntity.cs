@@ -1,4 +1,5 @@
-﻿using ReportService.Data.Enum;
+﻿using App.Core.BaseClass;
+using ReportService.Data.Enum;
 
 namespace ReportService.Data.Entity
 {

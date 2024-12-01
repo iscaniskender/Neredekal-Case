@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HotelService.Data\HotelService.Data.csproj" />
     <ProjectReference Include="..\ReportService.Data\ReportService.Data.csproj" />
   </ItemGroup>
 
