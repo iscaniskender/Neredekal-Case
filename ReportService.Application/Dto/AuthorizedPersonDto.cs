@@ -1,4 +1,4 @@
-﻿namespace HotelService.Application.Dto
+﻿namespace ReportService.Application.Dto
 {
     public class AuthorizedPersonDto
     {

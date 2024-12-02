@@ -7,8 +7,6 @@ using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 
 
@@ -38,6 +36,8 @@ builder.Services.AddMassTransit(x =>
             h.Username("guest");
             h.Password("guest");
         });
+        
+        cfg.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
     });
 });
 

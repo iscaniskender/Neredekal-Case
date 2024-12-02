@@ -1,20 +1,21 @@
 # This is a generated file. Not intended for manual editing.
 version: "3.8"
 services:
-  hotelservice-api:
+  reportservice-consumer:
     build:
       context: "C:\\Users\\iscan\\source\\repos\\Neredekal-Case"
-      dockerfile: "HotelService.Api/Dockerfile"
+      dockerfile: "ReportService.Consumer/Dockerfile"
+      target: "build"
     command: []
     entrypoint:
     - "dotnet"
-    - "/app/bin/Debug/net8.0/HotelService.Api.dll"
+    - "/app/bin/Debug/net8.0/ReportService.Consumer.dll"
     environment:
-      DOTNET_USE_POLLING_FILE_WATCHER: "true"
-    image: "hotelservice.api:dev"
+      DOTNET_ENVIRONMENT: "Development"
+    image: "reportservice.consumer:dev"
     ports: []
     volumes:
-    - "C:\\Users\\iscan\\source\\repos\\Neredekal-Case\\HotelService.Api:/app:rw"
+    - "C:\\Users\\iscan\\source\\repos\\Neredekal-Case\\ReportService.Consumer:/app:rw"
     - "C:\\Users\\iscan\\source\\repos\\Neredekal-Case:/src:rw"
     - "C:\\Users\\iscan\\.nuget\\packages:/root/.nuget/packages"
     working_dir: "/app"

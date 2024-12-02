@@ -6,7 +6,7 @@ using ReportService.Data.Repository;
 
 namespace ReportService.Application.Report.Query;
 
-public class GetReportsByIdQueryHandler :IRequestHandler<GetReportsByIdQuery, Result<ReportDto>>
+public class GetReportsByIdQueryHandler : IRequestHandler<GetReportsByIdQuery, Result<ReportDto>>
 {
     private readonly IReportRepository _reportRepository;
     private readonly IMapper _mapper;

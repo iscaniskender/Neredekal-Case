@@ -1,6 +1,4 @@
-﻿using HotelService.Application.Dto;
-
-namespace ReportService.Application.Dto
+﻿namespace ReportService.Application.Dto
 {
     public class HotelDto
     {
@@ -10,4 +8,3 @@ namespace ReportService.Application.Dto
         public List<AuthorizedPersonDto> AuthorizedPersons { get; set; } = new();
     }
 }
-

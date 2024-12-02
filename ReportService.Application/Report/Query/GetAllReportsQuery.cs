@@ -4,4 +4,6 @@ using ReportService.Application.Dto;
 
 namespace ReportService.Application.Report.Query;
 
-public class GetAllReportsQuery :IRequest<Result<ReportDto[]>> {}
+public class GetAllReportsQuery : IRequest<Result<ReportDto[]>>
+{
+}

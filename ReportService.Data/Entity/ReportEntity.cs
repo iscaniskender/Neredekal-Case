@@ -7,11 +7,8 @@ namespace ReportService.Data.Entity
     {
         public Guid Id { get; set; }
         public ReportStatus Status { get; set; } = ReportStatus.Preparing;
-        
         public string Location { get; set; }  = string.Empty;
-
         public int HotelCount { get; set; } = 0;
-
         public int PhoneNumberCount { get; set; } = 0;
     }
 }

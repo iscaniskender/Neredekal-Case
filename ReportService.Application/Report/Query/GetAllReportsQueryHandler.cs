@@ -6,7 +6,7 @@ using ReportService.Data.Repository;
 
 namespace ReportService.Application.Report.Query;
 
-public class GetAllReportsQueryHandler :IRequestHandler<GetAllReportsQuery, Result<ReportDto[]>>
+public class GetAllReportsQueryHandler : IRequestHandler<GetAllReportsQuery, Result<ReportDto[]>>
 {
     private readonly IReportRepository _reportRepository;
     private readonly IMapper _mapper;

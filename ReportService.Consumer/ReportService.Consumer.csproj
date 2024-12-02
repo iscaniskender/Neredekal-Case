@@ -5,6 +5,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +16,7 @@
     <ItemGroup>
         <ProjectReference Include="..\App.Core\App.Core.csproj"/>
         <ProjectReference Include="..\ReportService.Client\ReportService.Client.csproj"/>
+        <ProjectReference Include="..\ReportService.Data\ReportService.Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>

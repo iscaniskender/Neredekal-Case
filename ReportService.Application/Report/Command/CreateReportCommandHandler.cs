@@ -7,7 +7,7 @@ using ReportService.Data.Repository;
 
 namespace ReportService.Application.Report.Command;
 
-public class CreateReportCommandHandler:IRequestHandler<CreateReportCommand,Result<Unit>>
+public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, Result<Unit>>
 {
     private readonly IReportRepository _reportRepository;
     private readonly IPublishEndpoint _publisherEndpoint;
@@ -23,10 +23,12 @@ public class CreateReportCommandHandler:IRequestHandler<CreateReportCommand,Resu
     {
         try
         {
-            var reportId =await _reportRepository.AddReportAsync(new ReportEntity());
-        
-            await _publisherEndpoint.Publish(new ReportCreatedEvent{ ReportId = reportId, Location = request.Location}, cancellationToken);
-        
+            var reportId = await _reportRepository.AddReportAsync(new ReportEntity{Location = request.Location});
+
+            var data =new ReportCreatedEvent { ReportId = reportId, Location = request.Location };
+            
+            await _publisherEndpoint.Publish(data, cancellationToken);
+
             return Result<Unit>.Success(Unit.Value);
         }
         catch (Exception e)

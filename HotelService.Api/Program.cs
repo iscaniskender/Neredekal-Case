@@ -32,7 +32,6 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 }
 
-// Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
 

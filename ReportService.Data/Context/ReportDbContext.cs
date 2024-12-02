@@ -22,28 +22,32 @@ namespace ReportService.Data.Context
             base.OnModelCreating(modelBuilder);
         }
         
-        public override int SaveChanges()
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var data = ChangeTracker.Entries<BaseEntity>();
-            foreach (var entry in data)
+            var entries = ChangeTracker.Entries<BaseEntity>();
+    
+            foreach (var entry in entries)
             {
-                if (entry.State == EntityState.Added)
+                switch (entry.State)
                 {
-                    entry.Entity.CreatedAt = DateTime.Now;
-                    entry.Entity.IsActive=true;
-                }
-                else if (entry.State == EntityState.Modified)
-                {
-                    entry.Entity.UpdatedAt = DateTime.Now;
-                }
-                else if (entry.State == EntityState.Deleted)
-                {
-                    entry.Entity.UpdatedAt = DateTime.Now;
-                    entry.Entity.IsActive = false;
-                    entry.State= EntityState.Modified;
+                    case EntityState.Added:
+                        entry.Entity.CreatedAt = DateTime.UtcNow;
+                        entry.Entity.IsActive = true;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.UpdatedAt = DateTime.UtcNow;
+                        break;
+
+                    case EntityState.Deleted:
+                        entry.Entity.UpdatedAt = DateTime.UtcNow;
+                        entry.Entity.IsActive = false;
+                        entry.State = EntityState.Modified;
+                        break;
                 }
             }
-            return base.SaveChanges();
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 

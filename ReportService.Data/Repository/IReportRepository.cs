@@ -9,6 +9,7 @@ namespace ReportService.Data.Repository
         Task<List<ReportEntity>> GetAllReportsAsync();
         Task<ReportEntity?> GetReportByIdAsync(Guid id);
         Task<Guid> AddReportAsync(ReportEntity report);
+        Task UpdateReportAsync (ReportEntity report);
         Task DeleteReportAsync(Guid id);
         Task<List<ReportEntity>> GetReportsByStatusAsync(ReportStatus status);
     }

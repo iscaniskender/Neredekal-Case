@@ -6,9 +6,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ReportService.Api/ReportService.Api.csproj", "ReportService.Api/"]
-COPY ["App.Core/App.Core.csproj", "App.Core/"]
 COPY ["ReportService.Data/ReportService.Data.csproj", "ReportService.Data/"]
+COPY ["App.Core/App.Core.csproj", "App.Core/"]
 COPY ["ReportService.Application/ReportService.Application.csproj", "ReportService.Application/"]
+COPY ["ReportService.Consumer/ReportService.Consumer.csproj", "ReportService.Consumer/"]
+COPY ["ReportService.Client/ReportService.Client.csproj", "ReportService.Client/"]
 RUN dotnet restore "ReportService.Api/ReportService.Api.csproj"
 COPY . .
 WORKDIR "/src/ReportService.Api"
