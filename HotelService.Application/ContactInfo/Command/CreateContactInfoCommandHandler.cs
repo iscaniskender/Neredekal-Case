@@ -5,31 +5,26 @@ using HotelService.Data.Repository;
 using HotelService.Data.Repository.ContactInfo;
 using HotelService.Data.Repository.Hotel;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HotelService.Application.ContactInfo.Command;
 
-public class CreateContactInfoCommandHandler :IRequestHandler<CreateContactInfoCommand, Result<Unit>>
+public class CreateContactInfoCommandHandler(IMapper mapper, IContactInfoRepository contactInfoRepository,
+    ILogger<CreateContactInfoCommandHandler> logger)
+    : IRequestHandler<CreateContactInfoCommand, Result<Unit>>
 {
-    private readonly IContactInfoRepository _contactInfoRepository;
-    private readonly IMapper _mapper;
-
-    public CreateContactInfoCommandHandler(IMapper mapper, IContactInfoRepository contactInfoRepository)
-    {
-        _mapper = mapper;
-        _contactInfoRepository = contactInfoRepository;
-    }
-
     public async Task<Result<Unit>> Handle(CreateContactInfoCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var hotel = _mapper.Map<ContactInfoEntity>(request);
-            await _contactInfoRepository.AddContactInfoAsync(hotel);
+            var hotel = mapper.Map<ContactInfoEntity>(request);
+            await contactInfoRepository.AddContactInfoAsync(hotel);
             return Result<Unit>.Success(Unit.Value);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            return Result<Unit>.Failure(ex.Message);
+            logger.LogError(e, e.Message);
+            return Result<Unit>.Failure(e.Message);
         }
     }
 }

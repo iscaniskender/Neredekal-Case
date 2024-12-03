@@ -23,8 +23,6 @@ public class ReportCreatedConsumer : IConsumer<ReportCreatedEvent>
     {
         try
         {
-            Console.WriteLine($"ReportCreatedEvent received: {context.Message.ReportId}");
-            
             var reportEvent = context.Message;
             
             var result = await _hotelService.GetHotelByLocationAsync(reportEvent.Location);
@@ -44,7 +42,6 @@ public class ReportCreatedConsumer : IConsumer<ReportCreatedEvent>
             };
         
             await _reportRepository.UpdateReportAsync(reportEntity);
-            Console.WriteLine("ReportCreatedEvent received");
         }
         catch (Exception ex)
         {

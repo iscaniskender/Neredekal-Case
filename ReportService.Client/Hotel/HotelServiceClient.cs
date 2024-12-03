@@ -5,16 +5,11 @@ using ReportService.Client.Hotel.Model;
 
 namespace ReportService.Client.Hotel;
 
-public class HotelServiceClient : IHotelServiceClient
+public class HotelServiceClient(IHttpClientFactory httpClientFactory) : IHotelServiceClient
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("HotelServiceClient");
 
-    public HotelServiceClient(IHttpClientFactory httpClientFactory)
-    {
-        _httpClient = httpClientFactory.CreateClient("HotelServiceClient");
-    }
-
-    public async Task<Result<HotelDto[]>> GetHotelByLocationAsync(string location)
+    public async Task<Result<HotelDto[]>?> GetHotelByLocationAsync(string location)
     {
         var response = await _httpClient.GetAsync($"/api/hotel/location/{location}");
 

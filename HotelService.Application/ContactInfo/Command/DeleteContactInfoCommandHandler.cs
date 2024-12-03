@@ -3,28 +3,26 @@ using HotelService.Data.Repository;
 using HotelService.Data.Repository.ContactInfo;
 using HotelService.Data.Repository.Hotel;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HotelService.Application.ContactInfo.Command;
 
-public class DeleteContactInfoCommandHandler : IRequestHandler<DeleteContactInfoCommand, Result<Unit>>
+public class DeleteContactInfoCommandHandler(
+    IContactInfoRepository contactInfoRepository,
+    ILogger<DeleteContactInfoCommandHandler> logger)
+    : IRequestHandler<DeleteContactInfoCommand, Result<Unit>>
 {
-    private readonly IContactInfoRepository _contactInfoRepository;
-
-    public DeleteContactInfoCommandHandler(IContactInfoRepository contactInfoRepository)
-    {
-        _contactInfoRepository = contactInfoRepository;
-    }
-
     public async Task<Result<Unit>> Handle(DeleteContactInfoCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            await _contactInfoRepository.DeleteContactInfoAsync(request.Id);
+            await contactInfoRepository.DeleteContactInfoAsync(request.Id);
             return Result<Unit>.Success(Unit.Value);
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            return Result<Unit>.Failure(ex.Message);
+            logger.LogError(e, e.Message);
+            return Result<Unit>.Failure(e.Message);
         }
     }
 }

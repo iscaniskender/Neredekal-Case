@@ -2,37 +2,33 @@
 using App.Core.Shared.Messages;
 using MassTransit;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using ReportService.Data.Entity;
 using ReportService.Data.Repository;
 
 namespace ReportService.Application.Report.Command;
 
-public class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, Result<Unit>>
+public class CreateReportCommandHandler(
+    IReportRepository reportRepository,
+    IPublishEndpoint publisherEndpoint,
+    ILogger<CreateReportCommandHandler> logger)
+    : IRequestHandler<CreateReportCommand, Result<Unit>>
 {
-    private readonly IReportRepository _reportRepository;
-    private readonly IPublishEndpoint _publisherEndpoint;
-
-    public CreateReportCommandHandler(IReportRepository reportRepository,
-        IPublishEndpoint publisherEndpoint)
-    {
-        _reportRepository = reportRepository;
-        _publisherEndpoint = publisherEndpoint;
-    }
-
     public async Task<Result<Unit>> Handle(CreateReportCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var reportId = await _reportRepository.AddReportAsync(new ReportEntity{Location = request.Location});
+            var reportId = await reportRepository.AddReportAsync(new ReportEntity{Location = request.Location});
 
             var data =new ReportCreatedEvent { ReportId = reportId, Location = request.Location };
             
-            await _publisherEndpoint.Publish(data, cancellationToken);
+            await publisherEndpoint.Publish(data, cancellationToken);
 
             return Result<Unit>.Success(Unit.Value);
         }
         catch (Exception e)
         {
+            logger.LogError(e, e.Message);
             return Result<Unit>.Failure(e.Message);
         }
     }

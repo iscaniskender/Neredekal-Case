@@ -5,5 +5,5 @@ namespace ReportService.Client.Hotel;
 
 public interface IHotelServiceClient
 {
-    Task<Result<HotelDto[]>> GetHotelByLocationAsync (string location);
+    Task<Result<HotelDto[]>?> GetHotelByLocationAsync (string location);
 }
