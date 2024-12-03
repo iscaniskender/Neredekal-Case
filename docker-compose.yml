@@ -5,14 +5,14 @@ services:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672" 
-      - "15672:15672" 
+      - "5672:5672"
+      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
     networks:
       - app_network
-    
+  
   hoteldb:
     image: postgres:latest
     container_name: hoteldb
@@ -36,11 +36,12 @@ services:
       - "5434:5432"
     networks:
       - app_network
-      
+  
   hotelservice-api:
     build:
       context: .
       dockerfile: HotelService.Api/Dockerfile
+    container_name: hotelservice-api
     ports:
       - "5076:8080"
     networks:
@@ -55,6 +56,7 @@ services:
     build:
       context: .
       dockerfile: ReportService.Api/Dockerfile
+    container_name: reportservice-api
     ports:
       - "5078:8080"
     networks:
@@ -64,22 +66,45 @@ services:
       - ConnectionStrings__ReportDatabase=Host=reportdb;Port=5432;Database=reportdb;Username=report_user;Password=report_password
     depends_on:
       - rabbitmq
-      - reportdbx
-        
-      
-  reportservice-consumer:
-    build:
-      context: .
-      dockerfile: ReportService.Consumer/Dockerfile
+      - reportdb
+      - hotelservice-api
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # Elasticsearch için JVM heap ayarları
+    ports:
+      - "9200:9200"
     networks:
       - app_network
-    environment:
-      - RabbitMQ__Host=rabbitmq
-      - RabbitMQ__Username=guest
-      - RabbitMQ__Password=guest
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.10.2
+    container_name: logstash
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf # Logstash pipeline dosyası
+    ports:
+      - "5044:5044" # Logstash için Beat input portu
     depends_on:
-      - rabbitmq
+      - elasticsearch
+    networks:
+      - app_network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.10.2
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601" # Kibana UI erişimi
+    depends_on:
+      - elasticsearch
+    networks:
+      - app_network
+
 networks:
   app_network:
     driver: bridge
-

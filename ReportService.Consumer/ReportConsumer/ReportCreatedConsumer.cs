@@ -1,11 +1,12 @@
 ﻿using App.Core.Shared.Messages;
 using MassTransit;
 using ReportService.Client.Hotel;
-using ReportService.Client.Hotel.Model;
 using ReportService.Consumer.Enum;
 using ReportService.Data.Entity;
 using ReportService.Data.Enum;
 using ReportService.Data.Repository;
+
+namespace ReportService.Consumer.ReportConsumer;
 
 public class ReportCreatedConsumer : IConsumer<ReportCreatedEvent>
 {
@@ -22,6 +23,8 @@ public class ReportCreatedConsumer : IConsumer<ReportCreatedEvent>
     {
         try
         {
+            Console.WriteLine($"ReportCreatedEvent received: {context.Message.ReportId}");
+            
             var reportEvent = context.Message;
             
             var result = await _hotelService.GetHotelByLocationAsync(reportEvent.Location);
@@ -39,8 +42,9 @@ public class ReportCreatedConsumer : IConsumer<ReportCreatedEvent>
                     .SelectMany(hotel => hotel.ContactInfos)
                     .Count(contact => contact.Type == ContactType.PhoneNumber.ToString())
             };
-
+        
             await _reportRepository.UpdateReportAsync(reportEntity);
+            Console.WriteLine("ReportCreatedEvent received");
         }
         catch (Exception ex)
         {

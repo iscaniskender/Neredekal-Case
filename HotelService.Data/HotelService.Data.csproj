@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\App.Core\App.Core.csproj" />
+    <ProjectReference Include="..\ReportService.Data\ReportService.Data.csproj" />
   </ItemGroup>
 
 </Project>

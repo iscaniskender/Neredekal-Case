@@ -1,21 +1,39 @@
 # This is a generated file. Not intended for manual editing.
 version: "3.8"
 services:
-  reportservice-consumer:
+  hotelservice-api:
     build:
       context: "C:\\Users\\iscan\\source\\repos\\Neredekal-Case"
-      dockerfile: "ReportService.Consumer/Dockerfile"
-      target: "build"
+      dockerfile: "HotelService.Api/Dockerfile"
+      target: "base"
     command: []
     entrypoint:
     - "dotnet"
-    - "/app/bin/Debug/net8.0/ReportService.Consumer.dll"
+    - "/app/bin/Debug/net8.0/HotelService.Api.dll"
     environment:
-      DOTNET_ENVIRONMENT: "Development"
-    image: "reportservice.consumer:dev"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "hotelservice.api:dev"
     ports: []
     volumes:
-    - "C:\\Users\\iscan\\source\\repos\\Neredekal-Case\\ReportService.Consumer:/app:rw"
+    - "C:\\Users\\iscan\\source\\repos\\Neredekal-Case\\HotelService.Api:/app:rw"
+    - "C:\\Users\\iscan\\source\\repos\\Neredekal-Case:/src:rw"
+    - "C:\\Users\\iscan\\.nuget\\packages:/root/.nuget/packages"
+    working_dir: "/app"
+  reportservice-api:
+    build:
+      context: "C:\\Users\\iscan\\source\\repos\\Neredekal-Case"
+      dockerfile: "ReportService.Api/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/ReportService.Api.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "reportservice.api:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\iscan\\source\\repos\\Neredekal-Case\\ReportService.Api:/app:rw"
     - "C:\\Users\\iscan\\source\\repos\\Neredekal-Case:/src:rw"
     - "C:\\Users\\iscan\\.nuget\\packages:/root/.nuget/packages"
     working_dir: "/app"
