@@ -3,12 +3,7 @@ using MediatR;
 
 namespace ReportService.Application.Report.Command;
 
-public class CreateReportCommand : IRequest<Result<Unit>>
+public class CreateReportCommand(string location) : IRequest<Result<Unit>>
 {
-    public string Location { get; set; }
-
-    public CreateReportCommand(string location)
-    {
-        Location = location;
-    }
+    public string Location { get; set; } = location;
 }

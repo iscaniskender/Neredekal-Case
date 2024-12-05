@@ -4,12 +4,7 @@ using ReportService.Application.Dto;
 
 namespace ReportService.Application.Report.Query;
 
-public class GetReportsByIdQuery : IRequest<Result<ReportDto>>
+public class GetReportsByIdQuery(Guid id) : IRequest<Result<ReportDto>>
 {
-    public Guid Id { get; set; }
-
-    public GetReportsByIdQuery(Guid id)
-    {
-        Id = id;
-    }
+    public Guid Id { get; set; } = id;
 }

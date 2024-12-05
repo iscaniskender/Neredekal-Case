@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using HotelService.Application.AuthorizedPerson.Command;
 
-namespace HotelService.Application.AuthorizedPerson.Command
+namespace HotelService.Application.AuthorizedPerson.Validator
 {
     public class DeleteAuthorizedPersonCommandValidator : AbstractValidator<DeleteAuthorizedPersonCommand>
     {

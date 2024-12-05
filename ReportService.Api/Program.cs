@@ -1,3 +1,4 @@
+using ReportService.Api.Middleware;
 using ReportService.Application;
 using ReportService.Client;
 using ReportService.Consumer;
@@ -26,6 +27,8 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.Services.ApplyMigrations();
 

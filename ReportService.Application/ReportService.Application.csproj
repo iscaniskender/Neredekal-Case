@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="FluentValidation" Version="11.11.0" />
       <PackageReference Include="MassTransit" Version="8.3.2" />
       <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
       <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.2" />
@@ -25,10 +26,6 @@
       <ProjectReference Include="..\App.Core\App.Core.csproj" />
       <ProjectReference Include="..\ReportService.Consumer\ReportService.Consumer.csproj" />
       <ProjectReference Include="..\ReportService.Data\ReportService.Data.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Validator\" />
     </ItemGroup>
 
 </Project>
