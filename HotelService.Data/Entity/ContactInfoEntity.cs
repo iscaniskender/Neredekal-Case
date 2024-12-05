@@ -1,9 +1,5 @@
 ﻿using HotelService.Data.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using App.Core.BaseClass;
 
 namespace HotelService.Data.Entity
 {
@@ -13,6 +9,6 @@ namespace HotelService.Data.Entity
         public ContactType Type { get; set; }
         public string Content { get; set; }
         public Guid HotelId { get; set; }
-        public required HotelEntity Hotel { get; set; }
+        public HotelEntity Hotel { get; set; }
     }
 }

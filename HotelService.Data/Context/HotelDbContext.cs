@@ -1,4 +1,5 @@
-﻿using HotelService.Data.Entity;
+﻿using App.Core.BaseClass;
+using HotelService.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelService.Data.Context
@@ -14,7 +15,6 @@ namespace HotelService.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // HotelEntity
             modelBuilder.Entity<HotelEntity>(entity =>
             {
                 entity.HasKey(h => h.Id);
@@ -27,7 +27,6 @@ namespace HotelService.Data.Context
                       .HasForeignKey(a => a.HotelId);
             });
 
-            // ContactInfoEntity
             modelBuilder.Entity<ContactInfoEntity>(entity =>
             {
                 entity.HasKey(c => c.Id);
@@ -35,7 +34,6 @@ namespace HotelService.Data.Context
                 entity.Property(c => c.Content).IsRequired().HasMaxLength(500);
             });
 
-            // AuthorizedPersonEntity
             modelBuilder.Entity<AuthorizedPersonEntity>(entity =>
             {
                 entity.HasKey(a => a.Id);
@@ -44,6 +42,34 @@ namespace HotelService.Data.Context
             });
 
             base.OnModelCreating(modelBuilder);
+        }
+        
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries<BaseEntity>();
+    
+            foreach (var entry in entries)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedAt = DateTime.UtcNow;
+                        entry.Entity.IsActive = true;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.UpdatedAt = DateTime.UtcNow;
+                        break;
+
+                    case EntityState.Deleted:
+                        entry.Entity.UpdatedAt = DateTime.UtcNow;
+                        entry.Entity.IsActive = false;
+                        entry.State = EntityState.Modified;
+                        break;
+                }
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }

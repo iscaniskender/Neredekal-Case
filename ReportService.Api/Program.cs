@@ -1,16 +1,33 @@
-using Microsoft.EntityFrameworkCore;
-using ReportService.Data.Context;
+using ReportService.Application;
+using ReportService.Client;
+using ReportService.Consumer;
+using ReportService.Data;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<ReportDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("ReportDatabase")));
+builder.Services.ConfigureMessageConsumer(builder.Configuration)
+    .ConfigureApplication(builder.Configuration)
+    .ConfigureData(builder.Configuration)
+    .ConfigureClient(builder.Configuration);
+
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.Elasticsearch(new Serilog.Sinks.Elasticsearch.ElasticsearchSinkOptions(new Uri("http://elasticsearch:9200"))
+    {
+        AutoRegisterTemplate = true,
+        IndexFormat = "hotelservice-logs-{0:yyyy.MM.dd}"
+    })
+    .Enrich.FromLogContext()
+    .CreateLogger();
 
 var app = builder.Build();
+
+app.Services.ApplyMigrations();
 
 // Configure the HTTP request pipeline.
 

@@ -1,6 +1,20 @@
 version: '3.8'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - app_network
+  
   hoteldb:
     image: postgres:latest
     container_name: hoteldb
@@ -13,7 +27,7 @@ services:
     volumes:
       - hoteldb_data:/var/lib/postgresql/data
     networks:
-      - postgres_network
+      - app_network
 
   reportdb:
     image: postgres:latest
@@ -23,16 +37,88 @@ services:
       - POSTGRES_PASSWORD=report_password
       - POSTGRES_DB=reportdb
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - reportdb_data:/var/lib/postgresql/data
     networks:
-      - postgres_network
+      - app_network
+  
+  hotelservice-api:
+    build:
+      context: .
+      dockerfile: HotelService.Api/Dockerfile
+    container_name: hotelservice-api
+    ports:
+      - "5076:8080"
+    networks:
+      - app_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__HotelDatabase=Host=hoteldb;Port=5432;Database=hoteldb;Username=hotel_user;Password=hotel_password
+      - Redis__Connection=redis:6379
+    depends_on:
+      - hoteldb
+      - redis
+  
+  reportservice-api:
+    build:
+      context: .
+      dockerfile: ReportService.Api/Dockerfile
+    container_name: reportservice-api
+    ports:
+      - "5078:8080"
+    networks:
+      - app_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__ReportDatabase=Host=reportdb;Port=5432;Database=reportdb;Username=report_user;Password=report_password
+      - Redis__Connection=redis:6379
+    depends_on:
+      - rabbitmq
+      - reportdb
+      - hotelservice-api
+      - redis
 
-volumes:
-  hoteldb_data:
-  reportdb_data:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - app_network
+      
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.10.2
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - app_network
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app_network
 
 networks:
-  postgres_network:
+  app_network:
     driver: bridge
+
+volumes:
+  rabbitmq_data:
+  hoteldb_data:
+  reportdb_data: 
+  elasticsearch_data:

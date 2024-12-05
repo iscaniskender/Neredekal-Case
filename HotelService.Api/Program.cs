@@ -1,18 +1,31 @@
-using HotelService.Data.Context;
-using Microsoft.EntityFrameworkCore;
+using HotelService.Application;
+using HotelService.Data;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<HotelDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("HotelDatabase")));
+builder.Services.ConfigureApplication(builder.Configuration)
+    .ConfigureData(builder.Configuration);
+
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.Elasticsearch(new Serilog.Sinks.Elasticsearch.ElasticsearchSinkOptions(new Uri("http://elasticsearch:9200"))
+    {
+        AutoRegisterTemplate = true,
+        IndexFormat = "hotelservice-logs-{0:yyyy.MM.dd}"
+    })
+    .Enrich.FromLogContext()
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.Services.ApplyMigrations();
 
 app.UseHttpsRedirection();
 
