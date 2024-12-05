@@ -1,4 +1,7 @@
-﻿using HotelService.Application.Hotel.Command;
+﻿using HotelService.Application.AuthorizedPerson.Command;
+using HotelService.Application.ContactInfo.Command;
+using HotelService.Application.ContactInfo.Query;
+using HotelService.Application.Hotel.Command;
 using HotelService.Application.Hotel.Query;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -44,5 +47,44 @@ namespace HotelService.Api.Controllers
             var response = await mediator.Send(new DeleteHotelCommand(id));
             return HandleResponse(response);
         }
+        
+        [HttpPost("authorized-person")]
+        public async Task<IActionResult> AuthorizedPerson([FromBody]CreateAuthorizedPersonCommand command)
+        {
+            var response = await mediator.Send(command);
+            return HandleResponse(response);
+        }
+
+        [HttpDelete("authorized-person/{id}")]
+        public async Task<IActionResult> DeleteAuthorizedPerson(Guid id)
+        {
+            var command = new DeleteAuthorizedPersonCommand(id);
+            var response = await mediator.Send(command);
+            return HandleResponse(response);
+        }
+
+        [HttpPost ("contact-info")]
+        public async Task<IActionResult> CreateContactInfo([FromBody]CreateContactInfoCommand command)
+        {
+            var response = await mediator.Send(command);
+            return HandleResponse(response);
+        }
+
+        [HttpDelete("contact-info/{id}")]
+        public async Task<IActionResult> DeleteContactInfo(Guid id)
+        {
+            var command = new DeleteContactInfoCommand(id);
+            var response = await mediator.Send(command);
+            return HandleResponse(response);
+        }
+
+        [HttpGet("{id}/contact-info")]
+        public async Task<IActionResult> GetContactInfoByHotelId(Guid id)
+        {
+            var response = await mediator.Send(new GetContactInfoByHotelIdQuery(id));
+            return HandleResponse(response);
+        }
+        
+        
     }
 }
