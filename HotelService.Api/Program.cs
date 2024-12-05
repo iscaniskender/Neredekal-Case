@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.ConfigureApplication(builder.Configuration)
     .ConfigureData(builder.Configuration);
 
+
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .WriteTo.Console()

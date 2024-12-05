@@ -6,7 +6,7 @@ namespace ReportService.Data.Repository
     public interface IReportRepository
     {
      
-        Task<List<ReportEntity>> GetAllReportsAsync();
+        Task<List<ReportEntity>> GetAllReportsAsync(CancellationToken cancellationToken = default);
         Task<ReportEntity?> GetReportByIdAsync(Guid id);
         Task<Guid> AddReportAsync(ReportEntity report);
         Task UpdateReportAsync (ReportEntity report);

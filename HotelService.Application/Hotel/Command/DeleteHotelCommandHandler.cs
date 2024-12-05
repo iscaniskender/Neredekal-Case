@@ -1,24 +1,20 @@
-﻿using App.Core.Results;
-using AutoMapper;
+﻿using App.Core.Enum;
+using App.Core.Results;
 using HotelService.Data.Repository.Hotel;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace HotelService.Application.Hotel.Command
 {
-    public class DeleteHotelCommandHandler : IRequestHandler<DeleteHotelCommand, Result<Unit>>
+    public class DeleteHotelCommandHandler(IHotelRepository hotelRepository,IDistributedCache distributedCache)
+        : IRequestHandler<DeleteHotelCommand, Result<Unit>>
     {
-        private readonly IHotelRepository _hotelRepository;
-
-        public DeleteHotelCommandHandler(IHotelRepository hotelRepository)
-        {
-            _hotelRepository = hotelRepository;
-        }
-
         public async Task<Result<Unit>> Handle(DeleteHotelCommand request, CancellationToken cancellationToken)
         {
             try
             {
-               await _hotelRepository.DeleteHotelAsync(request.Id);
+               await hotelRepository.DeleteHotelAsync(request.Id);
+               await distributedCache.RemoveAsync(Const.HotelListCacheKey, cancellationToken);
                return Result<Unit>.Success(Unit.Value);
             }
             catch (Exception e)

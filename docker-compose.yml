@@ -55,8 +55,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__HotelDatabase=Host=hoteldb;Port=5432;Database=hoteldb;Username=hotel_user;Password=hotel_password
+      - Redis__Connection=redis:6379
     depends_on:
       - hoteldb
+      - redis
   
   reportservice-api:
     build:
@@ -70,10 +72,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__ReportDatabase=Host=reportdb;Port=5432;Database=reportdb;Username=report_user;Password=report_password
+      - Redis__Connection=redis:6379
     depends_on:
       - rabbitmq
       - reportdb
       - hotelservice-api
+      - redis
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
@@ -98,6 +102,14 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
+    networks:
+      - app_network
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
     networks:
       - app_network
 

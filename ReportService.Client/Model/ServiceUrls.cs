@@ -1,6 +1,6 @@
 ﻿namespace ReportService.Client.Model;
 
-public class ServiceUrls(string hotelServiceUrl)
+public class ServiceUrls
 {
-    public string HotelServiceUrl { get; init; } = hotelServiceUrl;
+    public string HotelService { get; set; }
 }

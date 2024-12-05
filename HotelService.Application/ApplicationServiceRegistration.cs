@@ -8,10 +8,17 @@ namespace HotelService.Application;
 public static class ApplicationServiceRegistration
 {
     public static IServiceCollection ConfigureApplication(this IServiceCollection services,
-        IConfigurationManager configManager)
+        IConfiguration configuration)
     {
         services.RegisterRequestHandlers();
         services.AddAutoMapper(typeof(HotelMapping));
+        
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetSection("Redis:Connection").Value;
+            options.InstanceName = "RedisInstance";
+        });
+
         return services;
     }
 }

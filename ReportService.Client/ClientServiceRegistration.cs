@@ -14,11 +14,17 @@ public static class ClientServiceRegistration
         services.AddScoped<IHotelServiceClient, HotelServiceClient>();
         
         services.Configure<ServiceUrls>(configManager.GetSection("ServiceUrls"));
-        
+
         services.AddHttpClient("HotelServiceClient", (sp, client) =>
         {
             var config = sp.GetRequiredService<IOptions<ServiceUrls>>().Value;
-            client.BaseAddress = new Uri(config.HotelServiceUrl);
+
+            if (string.IsNullOrWhiteSpace(config.HotelService))
+            {
+                throw new InvalidOperationException("The HotelServiceUrl is not configured. Please check your appsettings.json.");
+            }
+
+            client.BaseAddress = new Uri(config.HotelService);
         });
 
         return services;

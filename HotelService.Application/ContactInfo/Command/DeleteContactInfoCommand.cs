@@ -1,14 +1,9 @@
 ﻿using App.Core.Results;
 using MediatR;
 
-namespace HotelService.Application.ContactInfo;
+namespace HotelService.Application.ContactInfo.Command;
 
-public class DeleteContactInfoCommand : IRequest<Result<Unit>>
+public class DeleteContactInfoCommand(Guid id) : IRequest<Result<Unit>>
 {
-    public Guid Id { get; set; }
-
-    public DeleteContactInfoCommand(Guid id)
-    {
-        Id = id;
-    }
+    public Guid Id { get; set; } = id;
 }

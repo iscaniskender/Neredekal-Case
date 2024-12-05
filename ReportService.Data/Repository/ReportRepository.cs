@@ -6,55 +6,48 @@ using Microsoft.EntityFrameworkCore;
 namespace ReportService.Data.Repository
 {
 
-    public class ReportRepository : IReportRepository
+    public class ReportRepository(ReportDbContext context) : IReportRepository
     {
-        private readonly ReportDbContext _context;
-
-        public ReportRepository(ReportDbContext context)
+        public async Task<List<ReportEntity>> GetAllReportsAsync( CancellationToken cancellationToken = default)
         {
-            _context = context;
-        }
-
-        public async Task<List<ReportEntity>> GetAllReportsAsync()
-        {
-            return await _context.Reports
+            return await context.Reports
                 .Where(x=>x.IsActive)
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<ReportEntity?> GetReportByIdAsync(Guid id)
         {
-            return await _context.Reports
+            return await context.Reports
                 .FirstOrDefaultAsync(r => r.Id == id && r.IsActive);
         }
 
         public async Task<Guid> AddReportAsync(ReportEntity report)
         {
-            await _context.Reports.AddAsync(report);
-            await _context.SaveChangesAsync();
+            await context.Reports.AddAsync(report);
+            await context.SaveChangesAsync();
 
             return report.Id;
         }
 
         public async Task UpdateReportAsync(ReportEntity report)
         {
-            _context.Reports.Update(report);
-            await _context.SaveChangesAsync();
+            context.Reports.Update(report);
+            await context.SaveChangesAsync();
         }
 
         public async Task DeleteReportAsync(Guid id)
         {
-            var report = await _context.Reports.FindAsync(id);
+            var report = await context.Reports.FindAsync(id);
             if (report != null)
             {
-                _context.Reports.Remove(report);
-                await _context.SaveChangesAsync();
+                context.Reports.Remove(report);
+                await context.SaveChangesAsync();
             }
         }
         public async Task<List<ReportEntity>> GetReportsByStatusAsync(ReportStatus status)
         {
-            return await _context.Reports
+            return await context.Reports
                 .Where(r => r.Status == status)
                 .ToListAsync();
         }

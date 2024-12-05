@@ -8,24 +8,16 @@ using ReportService.Data.Repository;
 
 namespace ReportService.Consumer.ReportConsumer;
 
-public class ReportCreatedConsumer : IConsumer<ReportCreatedEvent>
+public class ReportCreatedConsumer(IHotelServiceClient hotelService, IReportRepository reportRepository)
+    : IConsumer<ReportCreatedEvent>
 {
-    private readonly IHotelServiceClient _hotelService;
-    private readonly IReportRepository _reportRepository;
-
-    public ReportCreatedConsumer(IHotelServiceClient hotelService, IReportRepository reportRepository)
-    {
-        _hotelService = hotelService;
-        _reportRepository = reportRepository;
-    }
-
     public async Task Consume(ConsumeContext<ReportCreatedEvent> context)
     {
         try
         {
             var reportEvent = context.Message;
             
-            var result = await _hotelService.GetHotelByLocationAsync(reportEvent.Location);
+            var result = await hotelService.GetHotelByLocationAsync(reportEvent.Location);
             var hotels = result?.Data ?? [];
             
             await Task.Delay(10000);
@@ -41,7 +33,7 @@ public class ReportCreatedConsumer : IConsumer<ReportCreatedEvent>
                     .Count(contact => contact.Type == ContactType.PhoneNumber.ToString())
             };
         
-            await _reportRepository.UpdateReportAsync(reportEntity);
+            await reportRepository.UpdateReportAsync(reportEntity);
         }
         catch (Exception ex)
         {

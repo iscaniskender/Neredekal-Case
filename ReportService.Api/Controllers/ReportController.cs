@@ -30,9 +30,6 @@ namespace ReportService.Api.Controllers
         {
             var query = new GetReportsByIdQuery(id);
             var report = await _mediator.Send(query);
-            if (report == null)
-                return NotFound();
-            
             return Ok(report);
         }
         

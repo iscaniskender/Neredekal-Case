@@ -27,4 +27,8 @@
       <ProjectReference Include="..\ReportService.Data\ReportService.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Validator\" />
+    </ItemGroup>
+
 </Project>

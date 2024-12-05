@@ -18,6 +18,9 @@ public class CreateReportCommandHandler(
     {
         try
         {
+            if (string.IsNullOrEmpty(request.Location))
+                return Result<Unit>.Failure("Location is required");
+            
             var reportId = await reportRepository.AddReportAsync(new ReportEntity{Location = request.Location});
 
             var data =new ReportCreatedEvent { ReportId = reportId, Location = request.Location };

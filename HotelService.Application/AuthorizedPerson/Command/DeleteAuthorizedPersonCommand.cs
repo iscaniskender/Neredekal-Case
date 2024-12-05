@@ -3,12 +3,7 @@ using MediatR;
 
 namespace HotelService.Application.AuthorizedPerson.Command;
 
-public class DeleteAuthorizedPersonCommand : IRequest<Result<Unit>>
+public class DeleteAuthorizedPersonCommand(Guid id) : IRequest<Result<Unit>>
 {
-    public Guid Id { get; set; }
-
-    public DeleteAuthorizedPersonCommand(Guid id)
-    {
-        Id = id;
-    }
+    public Guid Id { get; set; } = id;
 }

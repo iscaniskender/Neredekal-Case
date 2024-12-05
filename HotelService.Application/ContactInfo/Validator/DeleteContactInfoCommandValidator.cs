@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HotelService.Application.ContactInfo.Command;
 
 namespace HotelService.Application.ContactInfo.Validator
 {
