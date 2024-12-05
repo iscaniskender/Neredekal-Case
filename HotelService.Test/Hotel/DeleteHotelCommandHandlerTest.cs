@@ -6,13 +6,13 @@ using Moq;
 
 namespace HotelService.Test.Hotel;
 
-public class DeleteHotelCommandHandlerTests
+public class DeleteHotelCommandHandlerValidatorTests
 {
     private readonly Mock<IHotelRepository> _hotelRepositoryMock;
     private readonly Mock<IDistributedCache> _distributedCacheMock;
     private readonly DeleteHotelCommandHandler _handler;
 
-    public DeleteHotelCommandHandlerTests()
+    public DeleteHotelCommandHandlerValidatorTests()
     {
         _hotelRepositoryMock = new Mock<IHotelRepository>();
         _distributedCacheMock = new Mock<IDistributedCache>();

@@ -7,37 +7,27 @@ namespace ReportService.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ReportController : ControllerBase
+    public class ReportController(IMediator mediator) : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public ReportController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-        
-        
         [HttpGet]
         public async Task<IActionResult> GetReports()
         {
-            var query = new GetAllReportsQuery();
-            var reports = await _mediator.Send(query);
-            return Ok(reports);
+            var response = await mediator.Send(new GetAllReportsQuery());
+            return HandleResponse(response);
         }
-        
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetReportsById (Guid id)
+        public async Task<IActionResult> GetReportsById(Guid id)
         {
-            var query = new GetReportsByIdQuery(id);
-            var report = await _mediator.Send(query);
-            return Ok(report);
+            var response = await mediator.Send(new GetReportsByIdQuery(id));
+            return HandleResponse(response);
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> CreateReport ([FromBody] CreateReportCommand report)
+        public async Task<IActionResult> CreateReport([FromBody] CreateReportCommand command)
         {
-            var command = await _mediator.Send(report);
-            return Ok(report);
+            var response = await mediator.Send(command);
+            return HandleResponse(response);
         }
     }
 }

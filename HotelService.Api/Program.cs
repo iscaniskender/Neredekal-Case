@@ -1,3 +1,4 @@
+using HotelService.Api;
 using HotelService.Application;
 using HotelService.Data;
 using Serilog;
@@ -24,6 +25,8 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog();
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.Services.ApplyMigrations();
 
