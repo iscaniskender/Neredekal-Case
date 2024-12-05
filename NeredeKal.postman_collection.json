@@ -1,0 +1,380 @@
+{
+	"info": {
+		"_postman_id": "6879650f-5133-4c66-ad30-a2456a8c49e6",
+		"name": "NeredeKal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17501715"
+	},
+	"item": [
+		{
+			"name": "Hotel",
+			"item": [
+				{
+					"name": "Hotels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5076/api/hotel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HotelById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5076/api/hotel/:hotelId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel",
+								":hotelId"
+							],
+							"variable": [
+								{
+									"key": "hotelId",
+									"value": "572c8fa5-1066-4ee4-964a-289c79fc3dbd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hotel Location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5076/api/hotel/location/:location",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel",
+								"location",
+								":location"
+							],
+							"variable": [
+								{
+									"key": "location",
+									"value": "Antalya"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create hotel",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test Hotel istanbul\",\r\n    \"contactInfos\": [\r\n        {\r\n            \"type\": \"Email\",\r\n            \"content\": \"contact@testhotel.com\"\r\n        },\r\n        {\r\n            \"type\": \"PhoneNumber\",\r\n            \"content\": \"123-456-7890\"\r\n        },\r\n        {\r\n            \"type\": \"Location\",\r\n            \"content\": \"İstanbul\"\r\n        }\r\n    ],\r\n    \"authorizedPersons\": [\r\n        {\r\n            \"firstName\": \"John\",\r\n            \"lastName\": \"Doe\"\r\n        },\r\n        {\r\n            \"firstName\": \"Jane\",\r\n            \"lastName\": \"Smith\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5076/api/hotel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Hotel",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"İsko Hotels\",\r\n    \"location\":\"İstanbul\",\r\n    \"contactInfos\": [\r\n        {\r\n            \"id\": \"005c9e24-cf83-4b76-9867-e524262b4735\",\r\n                \"type\": \"Location\",\r\n                \"content\": \"updatedemail@testhotel.com\"\r\n        }\r\n    ],\r\n    \"authorizedPersons\": [\r\n        {\r\n\r\n            \"firstName\": \"Updated\",\r\n            \"lastName\": \"Name\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5076/api/hotel/:hotelId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel",
+								":hotelId"
+							],
+							"variable": [
+								{
+									"key": "hotelId",
+									"value": "572c8fa5-1066-4ee4-964a-289c79fc3dbd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete hotel",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5076/api/hotel/:hotelid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel",
+								":hotelid"
+							],
+							"variable": [
+								{
+									"key": "hotelid",
+									"value": "572c8fa5-1066-4ee4-964a-289c79fc3dbd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Person",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Dere\",\r\n    \"hotelId\": \"24a6b8f0-d23c-40c5-b5be-1b1bb31e7b66\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5076/api/hotel/authorized-person",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel",
+								"authorized-person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteperson",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5076/api/hotel/authorized-person/:personId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel",
+								"authorized-person",
+								":personId"
+							],
+							"variable": [
+								{
+									"key": "personId",
+									"value": "03a811ab-d8e1-44be-a787-7417cbc59f13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add contact",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"PhoneNumber\",\r\n    \"content\": \"1903\",\r\n    \"hotelId\": \"24a6b8f0-d23c-40c5-b5be-1b1bb31e7b66\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5076/api/hotel/contact-info",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel",
+								"contact-info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete  contact",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5076/api/hotel/contact-info/:contactId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel",
+								"contact-info",
+								":contactId"
+							],
+							"variable": [
+								{
+									"key": "contactId",
+									"value": "d6ba6dcb-85eb-46ef-a52f-b9a076286c83"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get contacts by HotelId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5076/api/hotel/:hotelId/contact-info",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5076",
+							"path": [
+								"api",
+								"hotel",
+								":hotelId",
+								"contact-info"
+							],
+							"variable": [
+								{
+									"key": "hotelId",
+									"value": "24a6b8f0-d23c-40c5-b5be-1b1bb31e7b66"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Reports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5078/api/report",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5078",
+							"path": [
+								"api",
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Report",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"location\":\"kars\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5078/api/report",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5078",
+							"path": [
+								"api",
+								"report"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
